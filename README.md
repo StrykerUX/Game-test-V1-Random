@@ -2,74 +2,95 @@
 
 Un juego de ajedrez con temática de anime desarrollado en Godot Engine 4.2.
 
-## Estado Actual del Proyecto
+## ✅ Características implementadas
 
-Este es un proyecto en fase inicial que incluye:
+Este proyecto incluye las siguientes características:
 
-- ✅ Estructura completa del proyecto Godot
-- ✅ Lógica básica de ajedrez (movimientos de piezas, capturas, detección de jaque/mate)
-- ✅ Implementación de interfaz de usuario (menú principal, pantalla de juego, configuración)
-- ✅ Sistema básico de guardado/carga de partidas
-- ✅ Modo IA básica (movimientos aleatorios)
-- ⚠️ No incluye assets gráficos (imágenes de piezas, tablero) - se deben añadir manualmente
-- ⚠️ No incluye recursos de audio - se deben añadir manualmente
+- ✅ **Sistema completo de ajedrez**
+  - Implementación completa de reglas de ajedrez
+  - Movimientos especiales (enroque, captura al paso, promoción)
+  - Jaque, jaque mate y tablas
+  
+- ✅ **Efectos visuales especiales**
+  - Efectos para movimientos importantes (enroque, captura con reina)
+  - Animaciones para jaque y jaque mate
+  - Efectos visuales mejorados para las piezas
 
-## Descripción
-
-Este proyecto implementa un juego de ajedrez tradicional con espacio para un diseño visual inspirado en personajes de anime. El código base está completo, pero requiere que añadas tus propios assets gráficos para las piezas con temática de anime.
-
-## Características Implementadas
-
-- **Lógica de ajedrez**:
-  - Movimientos legales para todas las piezas
-  - Sistema de turnos
-  - Detección de jaque y jaque mate
-  - Detección de tablas por ahogado
-
-- **Interfaces**:
-  - Menú principal funcional
-  - Pantalla de juego completa
-  - Menú de pausa
-  - Pantalla de configuración
-
-- **Modos de juego**:
-  - Un jugador vs IA (implementación básica)
-  - Multijugador local (dos jugadores en el mismo dispositivo)
-
-- **Funcionalidades adicionales**:
-  - Sistema de guardado/carga de partidas
-  - Configuración de opciones de juego (sonido, dificultad, pantalla)
-
-## Características Pendientes
-
-- **Assets gráficos**:
-  - Imágenes de piezas con temática de anime
-  - Textura personalizada para el tablero
-  - Elementos gráficos de UI mejorados
-
-- **Mejoras de juego**:
-  - IA más avanzada (actualmente solo hace movimientos aleatorios)
-  - Animaciones de movimiento
-  - Efectos visuales
-
-- **Funcionalidades adicionales**:
-  - Efectos de sonido y música
+- ✅ **Menú principal completo**
+  - Juego vs IA
+  - Juego multijugador local
+  - Selección de dificultad (fácil, medio, difícil)
+  - Configuración de gráficos y sonido
   - Tutorial interactivo
-  - Estadísticas de juego
 
-## Requisitos
+- ✅ **Tutorial interactivo**
+  - Lecciones de ajedrez paso a paso
+  - Explicaciones visuales de movimientos
+  - Demostraciones interactivas
+
+- ✅ **IA mejorada**
+  - Tres niveles de dificultad
+  - Algoritmo minimax con poda alfa-beta
+  - Evaluación posicional avanzada
+
+- ✅ **Límite de tiempo**
+  - Partidas con tiempo límite de 30 minutos
+  - Sistema de puntuación para determinar el ganador cuando se acaba el tiempo
+
+## 🛠️ Características pendientes para personalizar
+
+- Piezas de ajedrez con diseño de anime (los placeholders están listos)
+- Fondos personalizados con estilo anime
+- Música y efectos de sonido temáticos
+
+## 📸 Capturas de pantalla
+
+*Las capturas de pantalla estarán disponibles una vez que se añadan los assets gráficos personalizados.*
+
+## 🎮 Cómo jugar
+
+1. Inicia el juego desde el menú principal
+2. Selecciona el modo de juego (vs IA o vs Humano)
+3. Para la IA, selecciona el nivel de dificultad:
+   - **Fácil**: Movimientos aleatorios
+   - **Medio**: IA con algoritmo minimax (profundidad 2)
+   - **Difícil**: IA avanzada con minimax (profundidad 4)
+4. Haz clic en una pieza para seleccionarla
+5. Los movimientos válidos se mostrarán en verde
+6. Haz clic en una casilla válida para mover la pieza
+7. Observa los efectos especiales para movimientos importantes
+
+### Controles
+- **Clic izquierdo**: Seleccionar y mover piezas
+- **Tecla ESC**: Abrir menú de pausa
+
+## ⏱️ Temporizador
+- Cada partida tiene un tiempo límite de 30 minutos
+- Si se acaba el tiempo, se determina el ganador por la puntuación de las piezas
+- La barra de progreso muestra el tiempo restante
+- El color cambia a medida que se acerca el final (verde > amarillo > rojo)
+
+## 🎓 Tutorial
+El tutorial interactivo incluye lecciones sobre:
+1. Movimientos básicos de las piezas
+2. Enroque (corto y largo)
+3. Captura al paso
+4. Promoción de peón
+5. Jaque y jaque mate
+
+## 🖥️ Requisitos
 
 - Godot Engine 4.2 o superior
 
-## Instalación
+## 🚀 Instalación
 
 ### Desde el código fuente
 1. Clona este repositorio: `git clone https://github.com/StrykerUX/Game-test-V1-Random.git`
 2. Abre Godot Engine 4.2 o superior
 3. Selecciona "Importar" y navega hasta la carpeta donde clonaste el repositorio
 4. Haz clic en "Importar y Editar"
-5. Añade las imágenes para las piezas y el tablero en las carpetas correspondientes
-6. Una vez listo, haz clic en el botón "Reproducir" (F5) para ejecutar el juego
+5. Una vez listo, personaliza las imágenes en la carpeta `assets/` con tus propios diseños anime
+6. Haz clic en el botón "Reproducir" (F5) para ejecutar el juego
 
 ### Crear un ejecutable
 1. Abre el proyecto en Godot
@@ -78,33 +99,7 @@ Este proyecto implementa un juego de ajedrez tradicional con espacio para un dis
 4. Haz clic en "Exportar Proyecto" y selecciona la ubicación para el ejecutable
 5. Comparte el ejecutable generado con otros usuarios
 
-## Cómo jugar
-
-1. En el menú principal, selecciona "Jugar vs IA" o "Jugar vs Humano"
-2. El jugador de las piezas blancas siempre comienza
-3. Haz clic en una pieza para seleccionarla (se mostrarán los movimientos válidos)
-4. Haz clic en una casilla válida para mover la pieza seleccionada
-5. Busca dar jaque mate al rey oponente para ganar
-
-### Controles
-- **Clic izquierdo**: Seleccionar y mover piezas
-- **Tecla ESC**: Abrir menú de pausa
-
-## Personalización
-
-### Añadir piezas con temática de anime
-
-1. Crea o consigue imágenes de personajes de anime para las piezas (tamaño recomendado: 80x80 píxeles)
-2. Nombra los archivos siguiendo la convención establecida (ej: white_pawn.png, black_queen.png)
-3. Coloca las imágenes en la carpeta `assets/pieces/`
-
-### Personalizar el tablero
-
-1. Crea o consigue una imagen para el tablero (tamaño recomendado: 640x640 píxeles)
-2. Nombra el archivo como `chess_board.png`
-3. Coloca la imagen en la carpeta `assets/board/`
-
-## Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
 ```
 ├── assets/            # Recursos gráficos y audio
@@ -113,27 +108,28 @@ Este proyecto implementa un juego de ajedrez tradicional con espacio para un dis
 │   ├── ui/            # Elementos de la interfaz
 │   └── audio/         # Efectos de sonido y música
 ├── scenes/            # Escenas de Godot
+│   ├── main_menu.tscn # Menú principal
+│   ├── game.tscn      # Escena del juego
+│   ├── tutorial.tscn  # Tutorial interactivo
+│   └── settings.tscn  # Pantalla de configuración
 ├── scripts/           # Scripts GDScript
 │   ├── board/         # Lógica del tablero
 │   ├── pieces/        # Comportamiento de las piezas
-│   └── ui/            # Controladores de interfaz
+│   ├── ui/            # Controladores de interfaz
+│   └── effects/       # Efectos visuales
 ```
 
-## Próximos pasos
+## 👥 Contribuir
 
-Para llevar este proyecto al siguiente nivel:
+¡Las contribuciones son bienvenidas! Si quieres contribuir a este proyecto:
 
-1. **Añadir assets gráficos**: Esto es lo más urgente, ya que el juego funciona pero necesita imágenes para las piezas y el tablero.
-2. **Mejorar la IA**: Implementar algoritmos más avanzados como minimax con poda alfa-beta.
-3. **Añadir efectos de sonido y música**: Para mejorar la experiencia de juego.
-4. **Implementar animaciones**: Añadir animaciones para los movimientos y capturas.
-5. **Exportar a diferentes plataformas**: Crear ejecutables para Windows, macOS, Linux y posiblemente móviles.
+1. Haz un fork del repositorio
+2. Crea una rama para tu característica (`git checkout -b feature/amazing-feature`)
+3. Realiza tus cambios
+4. Haz commit de tus cambios (`git commit -m 'Añadir nueva característica'`)
+5. Haz push a la rama (`git push origin feature/amazing-feature`)
+6. Abre un Pull Request
 
-## Licencia
+## 📄 Licencia
 
 Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
-
-## Agradecimientos
-
-- El equipo de Godot Engine por su increíble motor de juegos
-- La comunidad de Godot por sus tutoriales y recursos
