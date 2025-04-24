@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bihnjgcxevk2k"]
+[gd_scene load_steps=4 format=3 uid="uid://bihnjgcxevk2k"]
 
 [ext_resource type="Script" path="res://scripts/board/chess_board.gd" id="1_0pywp"]
 [ext_resource type="Script" path="res://scripts/ui/game_ui.gd" id="2_aibpp"]
+[ext_resource type="Script" path="res://scripts/effects/chess_effects.gd" id="3_k3po1"]
 
 [node name="Game" type="Node2D"]
 
@@ -43,15 +44,24 @@ offset_bottom = 45.0
 theme_override_font_sizes/font_size = 24
 text = "Turno: Blancas"
 
-[node name="Timer" type="Label"]
+[node name="TimerLabel" type="Label"]
 layout_mode = 0
 offset_left = 1080.0
 offset_top = 15.0
 offset_right = 1260.0
 offset_bottom = 45.0
 theme_override_font_sizes/font_size = 24
-text = "00:00"
+text = "30:00"
 horizontal_alignment = 2
+
+[node name="TimerBar" type="ProgressBar"]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 45.0
+offset_right = 1260.0
+offset_bottom = 55.0
+value = 100.0
+show_percentage = false
 
 [node name="MenuButton" type="Button"]
 layout_mode = 0
@@ -145,8 +155,59 @@ offset_bottom = 370.0
 theme_override_font_sizes/font_size = 20
 text = "Menú Principal"
 
+[node name="TimeoutPanel" type="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 340.0
+offset_top = 160.0
+offset_right = 940.0
+offset_bottom = 560.0
+
+[node name="TimeoutLabel" type="Label"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 580.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 36
+text = "¡Tiempo agotado!"
+horizontal_alignment = 1
+
+[node name="TimeoutInfoLabel" type="Label"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 160.0
+offset_right = 580.0
+offset_bottom = 210.0
+theme_override_font_sizes/font_size = 24
+text = "Victoria para las Blancas"
+horizontal_alignment = 1
+
+[node name="TimeoutNewGameButton" type="Button"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 250.0
+offset_right = 400.0
+offset_bottom = 300.0
+theme_override_font_sizes/font_size = 20
+text = "Nueva Partida"
+
+[node name="TimeoutMainMenuButton" type="Button"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 320.0
+offset_right = 400.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 20
+text = "Menú Principal"
+
+[node name="Effects" type="Node2D" parent="."]
+script = ExtResource("3_k3po1")
+
 [connection signal="pressed" from="GameUI/MenuButton" to="GameUI" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="GameUI/UndoButton" to="GameUI" method="_on_undo_button_pressed"]
 [connection signal="pressed" from="GameUI/ResignButton" to="GameUI" method="_on_resign_button_pressed"]
 [connection signal="pressed" from="GameUI/GameOverPanel/NewGameButton" to="GameUI" method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="GameUI/GameOverPanel/MainMenuButton" to="GameUI" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="GameUI/TimeoutPanel/TimeoutNewGameButton" to="GameUI" method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="GameUI/TimeoutPanel/TimeoutMainMenuButton" to="GameUI" method="_on_main_menu_button_pressed"]
