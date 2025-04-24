@@ -1,0 +1,194 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8ihbhdw5w2sc"]
+
+[ext_resource type="Script" path="res://scripts/ui/settings.gd" id="1_r4gwa"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4gwa")
+
+[node name="Background" type="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.113725, 0.168627, 0.231373, 1)
+
+[node name="Title" type="Label"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 130.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Configuración"
+horizontal_alignment = 1
+
+[node name="SettingsContainer" type="VBoxContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -200.0
+offset_right = 350.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="SoundSection" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SoundLabel" type="Label"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Sonido"
+
+[node name="MusicVolume" type="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volumen de Música"
+
+[node name="Slider" type="HSlider"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="SfxVolume" type="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volumen de Efectos"
+
+[node name="Slider" type="HSlider"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="HSeparator" type="HSeparator"]
+layout_mode = 2
+
+[node name="GameplaySection" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="GameplayLabel" type="Label"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Juego"
+
+[node name="AIDifficulty" type="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Dificultad IA"
+
+[node name="OptionButton" type="OptionButton"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+item_count = 3
+selected = 1
+popup/item_0/text = "Fácil"
+popup/item_0/id = 0
+popup/item_1/text = "Medio"
+popup/item_1/id = 1
+popup/item_2/text = "Difícil"
+popup/item_2/id = 2
+
+[node name="AnimationSpeed" type="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Velocidad de Animación"
+
+[node name="Slider" type="HSlider"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="HSeparator2" type="HSeparator"]
+layout_mode = 2
+
+[node name="DisplaySection" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DisplayLabel" type="Label"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Pantalla"
+
+[node name="Fullscreen" type="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pantalla Completa"
+
+[node name="CheckBox" type="CheckBox"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="HBoxContainer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="ApplyButton" type="Button"]
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 20
+text = "Aplicar"
+
+[node name="BackButton" type="Button"]
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 20
+text = "Volver"
+
+[connection signal="value_changed" from="SettingsContainer/SoundSection/MusicVolume/Slider" to="." method="_on_music_volume_changed"]
+[connection signal="value_changed" from="SettingsContainer/SoundSection/SfxVolume/Slider" to="." method="_on_sfx_volume_changed"]
+[connection signal="item_selected" from="SettingsContainer/GameplaySection/AIDifficulty/OptionButton" to="." method="_on_ai_difficulty_changed"]
+[connection signal="value_changed" from="SettingsContainer/GameplaySection/AnimationSpeed/Slider" to="." method="_on_animation_speed_changed"]
+[connection signal="toggled" from="SettingsContainer/DisplaySection/Fullscreen/CheckBox" to="." method="_on_fullscreen_toggled"]
+[connection signal="pressed" from="ButtonsContainer/ApplyButton" to="." method="_on_apply_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
