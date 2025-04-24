@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj7qjvy6wrtoe"]
+
+[ext_resource type="Script" path="res://scripts/pieces/chess_piece.gd" id="1_njg8c"]
+
+[node name="ChessPiece" type="Node2D"]
+script = ExtResource("1_njg8c")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="SelectionIndicator" type="ColorRect" parent="."]
+visible = false
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0.87451, 0, 0.294118)
