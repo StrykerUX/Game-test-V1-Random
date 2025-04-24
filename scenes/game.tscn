@@ -1,0 +1,152 @@
+[gd_scene load_steps=3 format=3 uid="uid://bihnjgcxevk2k"]
+
+[ext_resource type="Script" path="res://scripts/board/chess_board.gd" id="1_0pywp"]
+[ext_resource type="Script" path="res://scripts/ui/game_ui.gd" id="2_aibpp"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="ColorRect"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.160784, 0.219608, 0.294118, 1)
+
+[node name="ChessBoard" type="Node2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("1_0pywp")
+
+[node name="BoardSprite" type="Sprite2D" parent="ChessBoard"]
+
+[node name="Pieces" type="Node2D" parent="ChessBoard"]
+
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_aibpp")
+
+[node name="TopPanel" type="Panel"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 60.0
+
+[node name="TurnLabel" type="Label"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 200.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 24
+text = "Turno: Blancas"
+
+[node name="Timer" type="Label"]
+layout_mode = 0
+offset_left = 1080.0
+offset_top = 15.0
+offset_right = 1260.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 24
+text = "00:00"
+horizontal_alignment = 2
+
+[node name="MenuButton" type="Button"]
+layout_mode = 0
+offset_left = 590.0
+offset_top = 15.0
+offset_right = 690.0
+offset_bottom = 45.0
+text = "Menú"
+
+[node name="SidePanel" type="Panel"]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 70.0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="MoveHistory" type="RichTextLabel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 250.0
+offset_bottom = 550.0
+theme_override_font_sizes/normal_font_size = 16
+text = "Historial de movimientos:
+"
+
+[node name="UndoButton" type="Button"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 570.0
+offset_right = 120.0
+offset_bottom = 610.0
+text = "Deshacer"
+
+[node name="ResignButton" type="Button"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 570.0
+offset_right = 250.0
+offset_bottom = 610.0
+text = "Rendirse"
+
+[node name="CapturedPieces" type="HBoxContainer"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 80.0
+offset_right = 970.0
+offset_bottom = 140.0
+
+[node name="WhiteCaptured" type="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BlackCaptured" type="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GameOverPanel" type="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 340.0
+offset_top = 160.0
+offset_right = 940.0
+offset_bottom = 560.0
+
+[node name="ResultLabel" type="Label"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 580.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 36
+text = "¡Jaque Mate! Ganan las Blancas"
+horizontal_alignment = 1
+
+[node name="NewGameButton" type="Button"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 250.0
+offset_right = 400.0
+offset_bottom = 300.0
+theme_override_font_sizes/font_size = 20
+text = "Nueva Partida"
+
+[node name="MainMenuButton" type="Button"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 320.0
+offset_right = 400.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 20
+text = "Menú Principal"
+
+[connection signal="pressed" from="GameUI/MenuButton" to="GameUI" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="GameUI/UndoButton" to="GameUI" method="_on_undo_button_pressed"]
+[connection signal="pressed" from="GameUI/ResignButton" to="GameUI" method="_on_resign_button_pressed"]
+[connection signal="pressed" from="GameUI/GameOverPanel/NewGameButton" to="GameUI" method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="GameUI/GameOverPanel/MainMenuButton" to="GameUI" method="_on_main_menu_button_pressed"]
