@@ -5,11 +5,17 @@ var white_time = 0
 var black_time = 0
 var current_player_time = 0
 var timer_active = false
+const GAME_TIME_LIMIT = 30 * 60  # 30 minutos en segundos
+var remaining_time = GAME_TIME_LIMIT
 
 # Referencia al tablero
 @onready var board = $"../ChessBoard"
 
 func _ready():
+	# Inicializar el temporizador
+	remaining_time = GAME_TIME_LIMIT
+	update_timer_display()
+	
 	# Conectar señales del tablero
 	board.connect("turn_changed", Callable(self, "_on_turn_changed"))
 	board.connect("piece_captured", Callable(self, "_on_piece_captured"))
@@ -23,6 +29,9 @@ func _ready():
 
 func _process(delta):
 	if timer_active:
+		# Actualizar el temporizador global de la partida
+		remaining_time -= delta
+		
 		# Actualizar el tiempo del jugador actual
 		if board.current_turn == board.WHITE:
 			white_time += delta
@@ -31,8 +40,12 @@ func _process(delta):
 			black_time += delta
 			current_player_time = black_time
 		
-		# Actualizar la etiqueta del cronómetro
+		# Actualizar la etiqueta del cronómetro y la barra
 		update_timer_display()
+		
+		# Verificar si se acabó el tiempo
+		if remaining_time <= 0:
+			time_over()
 
 func start_timer():
 	timer_active = true
@@ -42,9 +55,25 @@ func stop_timer():
 	timer_active = false
 
 func update_timer_display():
-	var minutes = int(current_player_time) / 60
-	var seconds = int(current_player_time) % 60
-	$Timer.text = "%02d:%02d" % [minutes, seconds]
+	# Actualizar texto del temporizador
+	var minutes = int(remaining_time) / 60
+	var seconds = int(remaining_time) % 60
+	$TimerLabel.text = "%02d:%02d" % [minutes, seconds]
+	
+	# Actualizar barra de progreso
+	var percentage = (remaining_time / GAME_TIME_LIMIT) * 100
+	$TimerBar.value = percentage
+	
+	# Cambiar color según el tiempo restante
+	if remaining_time < 60:  # Último minuto
+		$TimerLabel.add_theme_color_override("font_color", Color(1, 0, 0))
+		$TimerBar.modulate = Color(1, 0, 0)
+	elif remaining_time < 300:  # Últimos 5 minutos
+		$TimerLabel.add_theme_color_override("font_color", Color(1, 0.5, 0))
+		$TimerBar.modulate = Color(1, 0.5, 0)
+	else:
+		$TimerLabel.add_theme_color_override("font_color", Color(1, 1, 1))
+		$TimerBar.modulate = Color(0, 0.7, 0)
 
 func update_turn_label():
 	$TurnLabel.text = "Turno: " + ("Blancas" if board.current_turn == board.WHITE else "Negras")
@@ -79,6 +108,41 @@ func show_game_over(message):
 	$GameOverPanel/ResultLabel.text = message
 	stop_timer()
 
+func show_time_over():
+	$TimeoutPanel.visible = true
+	
+	# Determinar el ganador por puntuación
+	var white_score = calculate_score(board.WHITE)
+	var black_score = calculate_score(board.BLACK)
+	
+	var winner_text = ""
+	if white_score > black_score:
+		winner_text = "Victoria para las Blancas"
+	elif black_score > white_score:
+		winner_text = "Victoria para las Negras"
+	else:
+		winner_text = "¡Empate!"
+	
+	$TimeoutPanel/TimeoutInfoLabel.text = winner_text
+	stop_timer()
+
+func calculate_score(color):
+	# Calcular puntuación basada en piezas restantes
+	var score = 0
+	for i in range(board.BOARD_SIZE):
+		for j in range(board.BOARD_SIZE):
+			var piece = board.board[i][j]
+			if piece and piece.color == color:
+				match piece.type:
+					"pawn": score += 1
+					"knight": score += 3
+					"bishop": score += 3
+					"rook": score += 5
+					"queen": score += 9
+					"king": score += 0  # El rey no suma puntos
+	
+	return score
+
 func update_captured_pieces(piece):
 	var container = $WhiteCaptured if piece.color == board.BLACK else $BlackCaptured
 	
@@ -88,6 +152,12 @@ func update_captured_pieces(piece):
 	piece_sprite.custom_minimum_size = Vector2(40, 40)
 	
 	container.add_child(piece_sprite)
+
+func time_over():
+	remaining_time = 0
+	update_timer_display()
+	show_time_over()
+	board.game_over = true
 
 # Funciones de eventos
 
