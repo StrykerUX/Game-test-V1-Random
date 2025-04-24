@@ -15,7 +15,8 @@ var winner = null
 var move_history = []
 var ai_thinking = false
 var ai_enabled = false
-var ai_difficulty = 1
+var ai_difficulty = 1  # 0 = fácil, 1 = medio, 2 = difícil
+var last_move = null
 
 # Carga de recursos y escenas
 var piece_scene = preload("res://scenes/chess_piece.tscn")
@@ -23,6 +24,83 @@ var piece_scene = preload("res://scenes/chess_piece.tscn")
 # Variables para las piezas capturadas
 var captured_white = []
 var captured_black = []
+
+# Valores de las piezas para evaluación
+var piece_values = {
+	"pawn": 100,
+	"knight": 320,
+	"bishop": 330,
+	"rook": 500,
+	"queen": 900,
+	"king": 20000
+}
+
+# Tablas de posición para evaluación avanzada
+var pawn_table = [
+	[0, 0, 0, 0, 0, 0, 0, 0],
+	[50, 50, 50, 50, 50, 50, 50, 50],
+	[10, 10, 20, 30, 30, 20, 10, 10],
+	[5, 5, 10, 25, 25, 10, 5, 5],
+	[0, 0, 0, 20, 20, 0, 0, 0],
+	[5, -5, -10, 0, 0, -10, -5, 5],
+	[5, 10, 10, -20, -20, 10, 10, 5],
+	[0, 0, 0, 0, 0, 0, 0, 0]
+]
+
+var knight_table = [
+	[-50, -40, -30, -30, -30, -30, -40, -50],
+	[-40, -20, 0, 0, 0, 0, -20, -40],
+	[-30, 0, 10, 15, 15, 10, 0, -30],
+	[-30, 5, 15, 20, 20, 15, 5, -30],
+	[-30, 0, 15, 20, 20, 15, 0, -30],
+	[-30, 5, 10, 15, 15, 10, 5, -30],
+	[-40, -20, 0, 5, 5, 0, -20, -40],
+	[-50, -40, -30, -30, -30, -30, -40, -50]
+]
+
+var bishop_table = [
+	[-20, -10, -10, -10, -10, -10, -10, -20],
+	[-10, 0, 0, 0, 0, 0, 0, -10],
+	[-10, 0, 10, 10, 10, 10, 0, -10],
+	[-10, 5, 5, 10, 10, 5, 5, -10],
+	[-10, 0, 5, 10, 10, 5, 0, -10],
+	[-10, 10, 10, 10, 10, 10, 10, -10],
+	[-10, 5, 0, 0, 0, 0, 5, -10],
+	[-20, -10, -10, -10, -10, -10, -10, -20]
+]
+
+var rook_table = [
+	[0, 0, 0, 0, 0, 0, 0, 0],
+	[5, 10, 10, 10, 10, 10, 10, 5],
+	[-5, 0, 0, 0, 0, 0, 0, -5],
+	[-5, 0, 0, 0, 0, 0, 0, -5],
+	[-5, 0, 0, 0, 0, 0, 0, -5],
+	[-5, 0, 0, 0, 0, 0, 0, -5],
+	[-5, 0, 0, 0, 0, 0, 0, -5],
+	[0, 0, 0, 5, 5, 0, 0, 0]
+]
+
+var queen_table = [
+	[-20, -10, -10, -5, -5, -10, -10, -20],
+	[-10, 0, 0, 0, 0, 0, 0, -10],
+	[-10, 0, 5, 5, 5, 5, 0, -10],
+	[-5, 0, 5, 5, 5, 5, 0, -5],
+	[0, 0, 5, 5, 5, 5, 0, -5],
+	[-10, 5, 5, 5, 5, 5, 0, -10],
+	[-10, 0, 5, 0, 0, 0, 0, -10],
+	[-20, -10, -10, -5, -5, -10, -10, -20]
+]
+
+var king_table = [
+	[-30, -40, -40, -50, -50, -40, -40, -30],
+	[-30, -40, -40, -50, -50, -40, -40, -30],
+	[-30, -40, -40, -50, -50, -40, -40, -30],
+	[-30, -40, -40, -50, -50, -40, -40, -30],
+	[-20, -30, -30, -40, -40, -30, -30, -20],
+	[-10, -20, -20, -20, -20, -20, -20, -10],
+	[20, 20, 0, 0, 0, 0, 20, 20],
+	[20, 30, 10, 0, 0, 10, 30, 20]
+]
 
 # Señales
 signal piece_moved(from_pos, to_pos, piece)
@@ -458,6 +536,7 @@ func record_move(piece, from_pos, to_pos, captured):
 	}
 	
 	move_history.append(move)
+	last_move = move
 
 func check_game_state():
 	# Verificar jaque
@@ -526,6 +605,9 @@ func undo_last_move():
 		game_over = false
 		winner = null
 		
+		# Actualizar último movimiento
+		last_move = move_history.back() if move_history.size() > 0 else null
+		
 		return true
 	
 	return false
@@ -533,9 +615,16 @@ func undo_last_move():
 func ai_make_move():
 	ai_thinking = true
 	
-	# Implementar algoritmo de IA (por ejemplo, minimax con poda alfa-beta)
-	# Por simplicidad, aquí solo se hace un movimiento aleatorio
-	var ai_move = get_random_ai_move()
+	var ai_move
+	
+	# Elegir algoritmo basado en dificultad
+	match ai_difficulty:
+		0:  # Fácil - movimiento aleatorio
+			ai_move = get_random_ai_move()
+		1:  # Medio - minimax con profundidad 2
+			ai_move = get_minimax_move(2)
+		2:  # Difícil - minimax con profundidad 4
+			ai_move = get_minimax_move(4)
 	
 	if ai_move:
 		# Hacer movimiento después de pequeña pausa para simular "pensamiento"
@@ -561,6 +650,169 @@ func get_random_ai_move():
 		return possible_moves[randi() % possible_moves.size()]
 	
 	return null
+
+func get_minimax_move(depth):
+	var best_move = null
+	var best_score = -9999
+	var possible_moves = []
+	
+	# Encontrar todas las piezas de la IA y sus movimientos válidos
+	for i in range(BOARD_SIZE):
+		for j in range(BOARD_SIZE):
+			var piece = board[i][j]
+			if piece and piece.color == current_turn:
+				var valid_moves = get_valid_moves(piece)
+				for move in valid_moves:
+					possible_moves.append({"piece": piece, "to": move})
+	
+	# Evaluar cada movimiento
+	for move in possible_moves:
+		var piece = move.piece
+		var to_pos = move.to
+		var from_pos = piece.board_position
+		
+		# Simular movimiento
+		var captured = board[to_pos.x][to_pos.y]
+		board[from_pos.x][from_pos.y] = null
+		board[to_pos.x][to_pos.y] = piece
+		
+		# Evaluar tablero después del movimiento
+		var score = -minimax(depth - 1, -10000, 10000, 1 - current_turn)
+		
+		# Revertir movimiento
+		board[from_pos.x][from_pos.y] = piece
+		board[to_pos.x][to_pos.y] = captured
+		
+		# Actualizar el mejor movimiento
+		if score > best_score:
+			best_score = score
+			best_move = move
+	
+	return best_move
+
+func minimax(depth, alpha, beta, color):
+	# Si llegamos a la profundidad máxima, evaluar el tablero
+	if depth == 0:
+		return evaluate_board(color)
+	
+	# Si es jaque mate o tablas, retornar un valor extremo
+	if is_checkmate(color):
+		return -9000  # Perdió el color actual
+	
+	if is_stalemate(color):
+		return 0  # Empate
+	
+	var possible_moves = []
+	
+	# Encontrar todas las piezas y sus movimientos válidos
+	for i in range(BOARD_SIZE):
+		for j in range(BOARD_SIZE):
+			var piece = board[i][j]
+			if piece and piece.color == color:
+				var valid_moves = get_valid_moves(piece)
+				for move in valid_moves:
+					possible_moves.append({"piece": piece, "to": move})
+	
+	# Si no hay movimientos, retornar un valor de empate
+	if possible_moves.size() == 0:
+		return 0
+	
+	var best_score = -10000
+	
+	# Evaluar cada movimiento
+	for move in possible_moves:
+		var piece = move.piece
+		var to_pos = move.to
+		var from_pos = piece.board_position
+		
+		# Simular movimiento
+		var captured = board[to_pos.x][to_pos.y]
+		board[from_pos.x][from_pos.y] = null
+		board[to_pos.x][to_pos.y] = piece
+		
+		# Recursión minimax con poda alfa-beta
+		var score = -minimax(depth - 1, -beta, -alpha, 1 - color)
+		
+		# Revertir movimiento
+		board[from_pos.x][from_pos.y] = piece
+		board[to_pos.x][to_pos.y] = captured
+		
+		# Actualizar mejor puntuación
+		best_score = max(best_score, score)
+		alpha = max(alpha, score)
+		
+		# Poda alfa-beta
+		if alpha >= beta:
+			break
+	
+	return best_score
+
+func evaluate_board(color):
+	var score = 0
+	
+	# Sumar puntos por cada pieza según su valor
+	for i in range(BOARD_SIZE):
+		for j in range(BOARD_SIZE):
+			var piece = board[i][j]
+			if piece:
+				var piece_value = piece_values[piece.type]
+				var position_value = get_position_value(piece, Vector2(i, j))
+				
+				# Sumar para el color actual, restar para el oponente
+				if piece.color == color:
+					score += piece_value + position_value
+				else:
+					score -= piece_value + position_value
+	
+	# Bonus por jaque (ligero)
+	if is_king_in_check(1 - color):
+		score += 50
+	
+	# Bonus por movimientos disponibles (movilidad)
+	var mobility = count_mobility(color) - count_mobility(1 - color)
+	score += mobility * 10
+	
+	return score
+
+func get_position_value(piece, pos):
+	# Valor posicional según tabla de posición
+	var table
+	var x = pos.x
+	var y = pos.y
+	
+	# Para piezas negras, invertir la tabla
+	if piece.color == BLACK:
+		y = 7 - y
+	
+	match piece.type:
+		"pawn":
+			table = pawn_table
+		"knight":
+			table = knight_table
+		"bishop":
+			table = bishop_table
+		"rook":
+			table = rook_table
+		"queen":
+			table = queen_table
+		"king":
+			table = king_table
+		_:
+			return 0
+	
+	return table[y][x]
+
+func count_mobility(color):
+	# Contar número total de movimientos disponibles
+	var count = 0
+	
+	for i in range(BOARD_SIZE):
+		for j in range(BOARD_SIZE):
+			var piece = board[i][j]
+			if piece and piece.color == color:
+				count += get_valid_moves(piece).size()
+	
+	return count
 
 # Funciones de señales
 func _on_piece_moved(from_pos, to_pos, piece):
