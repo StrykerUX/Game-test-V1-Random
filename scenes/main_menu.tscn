@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://df6v8v5m1nkb7"]
+[gd_scene load_steps=3 format=3 uid="uid://df6v8v5m1nkb7"]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_sxa0c"]
+[ext_resource type="Texture2D" path="res://assets/ui/main_menu_bg.png" id="2_abcd1"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,23 +12,33 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sxa0c")
 
-[node name="Background" type="ColorRect"]
+[node name="Background" type="TextureRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.113725, 0.168627, 0.231373, 1)
+texture = ExtResource("2_abcd1")
+expand_mode = 1
+
+[node name="ColorOverlay" type="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.113725, 0.168627, 0.231373, 0.8)
 
 [node name="Title" type="Label"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 100.0
-offset_bottom = 180.0
+offset_top = 80.0
+offset_bottom = 160.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 64
 text = "Anime Chess"
 horizontal_alignment = 1
 
@@ -38,39 +49,151 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -70.0
-offset_right = 150.0
-offset_bottom = 170.0
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
 [node name="PlaySingleButton" type="Button"]
-custom_minimum_size = Vector2(300, 60)
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Jugar vs IA"
 
 [node name="PlayLocalButton" type="Button"]
-custom_minimum_size = Vector2(300, 60)
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Jugar vs Humano"
 
+[node name="DifficultyButton" type="Button"]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Dificultad"
+
+[node name="TutorialButton" type="Button"]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Tutorial"
+
 [node name="SettingsButton" type="Button"]
-custom_minimum_size = Vector2(300, 60)
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Configuración"
 
 [node name="QuitButton" type="Button"]
-custom_minimum_size = Vector2(300, 60)
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Salir"
 
+[node name="Version" type="Label"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "v0.1.0"
+horizontal_alignment = 2
+
+[node name="DifficultyPanel" type="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -175.0
+offset_right = 250.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 36
+text = "Dificultad"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="EasyButton" type="Button"]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Fácil"
+
+[node name="MediumButton" type="Button"]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Medio"
+
+[node name="HardButton" type="Button"]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Difícil"
+
+[node name="BackButton" type="Button"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -70.0
+offset_right = 75.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Volver"
+
 [connection signal="pressed" from="VBoxContainer/PlaySingleButton" to="." method="_on_play_single_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PlayLocalButton" to="." method="_on_play_local_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/DifficultyButton" to="." method="_on_difficulty_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="DifficultyPanel/VBoxContainer/EasyButton" to="." method="_on_easy_button_pressed"]
+[connection signal="pressed" from="DifficultyPanel/VBoxContainer/MediumButton" to="." method="_on_medium_button_pressed"]
+[connection signal="pressed" from="DifficultyPanel/VBoxContainer/HardButton" to="." method="_on_hard_button_pressed"]
+[connection signal="pressed" from="DifficultyPanel/BackButton" to="." method="_on_difficulty_back_button_pressed"]
