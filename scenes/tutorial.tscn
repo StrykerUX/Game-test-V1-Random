@@ -1,0 +1,192 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwdya12krtc7c"]
+
+[ext_resource type="Script" path="res://scripts/ui/tutorial.gd" id="1_0rw5x"]
+[ext_resource type="Texture2D" path="res://assets/ui/tutorial_bg.png" id="2_xyza1"]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0rw5x")
+
+[node name="Background" type="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xyza1")
+expand_mode = 1
+
+[node name="ColorOverlay" type="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.113725, 0.168627, 0.231373, 0.8)
+
+[node name="Title" type="Label"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Tutorial de Ajedrez"
+horizontal_alignment = 1
+
+[node name="ContentContainer" type="HBoxContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoardContainer" type="Panel"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ChessBoard" type="Node2D" parent="ContentContainer/BoardContainer"]
+position = Vector2(250, 250)
+
+[node name="BoardSprite" type="Sprite2D" parent="ContentContainer/BoardContainer/ChessBoard"]
+
+[node name="Pieces" type="Node2D" parent="ContentContainer/BoardContainer/ChessBoard"]
+
+[node name="Highlights" type="Node2D" parent="ContentContainer/BoardContainer/ChessBoard"]
+
+[node name="InfoPanel" type="Panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LessonsTitle" type="Label"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 28
+text = "Lecciones"
+
+[node name="LessonsList" type="VBoxContainer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 70.0
+offset_right = -20.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+
+[node name="Lesson1" type="Button"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "1. Movimientos básicos"
+
+[node name="Lesson2" type="Button"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "2. Enroque"
+
+[node name="Lesson3" type="Button"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "3. Captura al paso"
+
+[node name="Lesson4" type="Button"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "4. Promoción de peón"
+
+[node name="Lesson5" type="Button"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "5. Jaque y jaque mate"
+
+[node name="Description" type="RichTextLabel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 250.0
+offset_right = -20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "Selecciona una lección para comenzar."
+
+[node name="NavigationContainer" type="HBoxContainer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PrevButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Anterior"
+
+[node name="ResetButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Reiniciar"
+
+[node name="NextButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Siguiente"
+
+[node name="BackButton" type="Button"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -60.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Volver al Menú"
+
+[connection signal="pressed" from="ContentContainer/InfoPanel/LessonsList/Lesson1" to="." method="_on_lesson1_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/LessonsList/Lesson2" to="." method="_on_lesson2_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/LessonsList/Lesson3" to="." method="_on_lesson3_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/LessonsList/Lesson4" to="." method="_on_lesson4_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/LessonsList/Lesson5" to="." method="_on_lesson5_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/NavigationContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/NavigationContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="ContentContainer/InfoPanel/NavigationContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
