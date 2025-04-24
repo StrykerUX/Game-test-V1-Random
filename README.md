@@ -2,21 +2,60 @@
 
 Un juego de ajedrez con temática de anime desarrollado en Godot Engine 4.2.
 
-![Anime Chess Banner](https://github.com/StrykerUX/Game-test-V1-Random/blob/main/assets/README.md)
+## Estado Actual del Proyecto
+
+Este es un proyecto en fase inicial que incluye:
+
+- ✅ Estructura completa del proyecto Godot
+- ✅ Lógica básica de ajedrez (movimientos de piezas, capturas, detección de jaque/mate)
+- ✅ Implementación de interfaz de usuario (menú principal, pantalla de juego, configuración)
+- ✅ Sistema básico de guardado/carga de partidas
+- ✅ Modo IA básica (movimientos aleatorios)
+- ⚠️ No incluye assets gráficos (imágenes de piezas, tablero) - se deben añadir manualmente
+- ⚠️ No incluye recursos de audio - se deben añadir manualmente
 
 ## Descripción
 
-Este proyecto implementa un juego de ajedrez tradicional con un diseño visual inspirado en personajes de anime. Los jugadores pueden disfrutar de todas las reglas clásicas del ajedrez con un toque visual único.
+Este proyecto implementa un juego de ajedrez tradicional con espacio para un diseño visual inspirado en personajes de anime. El código base está completo, pero requiere que añadas tus propios assets gráficos para las piezas con temática de anime.
 
-## Características
+## Características Implementadas
 
-- Reglas completas de ajedrez
-- Diseño visual con temática de anime
-- Modo de un jugador contra la IA con diferentes niveles de dificultad
-- Modo multijugador local para jugar contra un amigo
-- Sistema de guardado y carga de partidas
-- Configuración personalizable (sonido, gráficos, dificultad)
-- Interfaz de usuario amigable e intuitiva
+- **Lógica de ajedrez**:
+  - Movimientos legales para todas las piezas
+  - Sistema de turnos
+  - Detección de jaque y jaque mate
+  - Detección de tablas por ahogado
+
+- **Interfaces**:
+  - Menú principal funcional
+  - Pantalla de juego completa
+  - Menú de pausa
+  - Pantalla de configuración
+
+- **Modos de juego**:
+  - Un jugador vs IA (implementación básica)
+  - Multijugador local (dos jugadores en el mismo dispositivo)
+
+- **Funcionalidades adicionales**:
+  - Sistema de guardado/carga de partidas
+  - Configuración de opciones de juego (sonido, dificultad, pantalla)
+
+## Características Pendientes
+
+- **Assets gráficos**:
+  - Imágenes de piezas con temática de anime
+  - Textura personalizada para el tablero
+  - Elementos gráficos de UI mejorados
+
+- **Mejoras de juego**:
+  - IA más avanzada (actualmente solo hace movimientos aleatorios)
+  - Animaciones de movimiento
+  - Efectos visuales
+
+- **Funcionalidades adicionales**:
+  - Efectos de sonido y música
+  - Tutorial interactivo
+  - Estadísticas de juego
 
 ## Requisitos
 
@@ -29,12 +68,15 @@ Este proyecto implementa un juego de ajedrez tradicional con un diseño visual i
 2. Abre Godot Engine 4.2 o superior
 3. Selecciona "Importar" y navega hasta la carpeta donde clonaste el repositorio
 4. Haz clic en "Importar y Editar"
-5. Una vez cargado el proyecto, haz clic en el botón "Reproducir" (F5) para ejecutar el juego
+5. Añade las imágenes para las piezas y el tablero en las carpetas correspondientes
+6. Una vez listo, haz clic en el botón "Reproducir" (F5) para ejecutar el juego
 
-### Desde binarios precompilados (próximamente)
-- Descarga la versión correspondiente a tu sistema operativo desde la sección de Releases
-- Descomprime el archivo
-- Ejecuta el archivo binario
+### Crear un ejecutable
+1. Abre el proyecto en Godot
+2. Haz clic en "Proyecto" → "Exportar..." en el menú superior
+3. Añade una configuración para la plataforma deseada (Windows, macOS, Linux)
+4. Haz clic en "Exportar Proyecto" y selecciona la ubicación para el ejecutable
+5. Comparte el ejecutable generado con otros usuarios
 
 ## Cómo jugar
 
@@ -77,27 +119,15 @@ Este proyecto implementa un juego de ajedrez tradicional con un diseño visual i
 │   └── ui/            # Controladores de interfaz
 ```
 
-## Estado del desarrollo
+## Próximos pasos
 
-Este proyecto está en desarrollo activo. Las siguientes características están planeadas para futuras actualizaciones:
+Para llevar este proyecto al siguiente nivel:
 
-- Soporte para multijugador en línea
-- Más variedades de sets de piezas con diferentes personajes de anime
-- Animaciones mejoradas
-- Modo historia con diferentes escenarios y personajes
-- Logros y sistema de progresión
-- Exportación a plataformas móviles
-
-## Contribuir
-
-¡Las contribuciones son bienvenidas! Si quieres contribuir a este proyecto:
-
-1. Haz un fork del repositorio
-2. Crea una rama para tu característica (`git checkout -b feature/amazing-feature`)
-3. Realiza tus cambios
-4. Haz commit de tus cambios (`git commit -m 'Add some amazing feature'`)
-5. Haz push a la rama (`git push origin feature/amazing-feature`)
-6. Abre un Pull Request
+1. **Añadir assets gráficos**: Esto es lo más urgente, ya que el juego funciona pero necesita imágenes para las piezas y el tablero.
+2. **Mejorar la IA**: Implementar algoritmos más avanzados como minimax con poda alfa-beta.
+3. **Añadir efectos de sonido y música**: Para mejorar la experiencia de juego.
+4. **Implementar animaciones**: Añadir animaciones para los movimientos y capturas.
+5. **Exportar a diferentes plataformas**: Crear ejecutables para Windows, macOS, Linux y posiblemente móviles.
 
 ## Licencia
 
@@ -107,4 +137,3 @@ Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
 
 - El equipo de Godot Engine por su increíble motor de juegos
 - La comunidad de Godot por sus tutoriales y recursos
-- Todos los artistas de anime cuyos estilos han inspirado el diseño visual
